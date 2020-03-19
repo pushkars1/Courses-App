@@ -1,9 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import {mount} from 'enzyme';
 import App from './App';
+import React from 'react';
+import {storeFactory} from './testUtils';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe('App component', () => {
+    const store = storeFactory({});
+    let app = mount(<App store={store}/>);
+
+    test("renders without error", () => {
+        const component = app.find('.App');
+        expect(component.length).toBe(1);
+    })
+
+    test("snapshotTesting of App Component", () => {
+        expect(app).toMatchSnapshot();
+    })
+})
